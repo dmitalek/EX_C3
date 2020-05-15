@@ -50,6 +50,7 @@
         }
     </style>
     <script>
+        $(document).ready(function() {   
         function createCookie(name,value) {
             let date = new Date();
             date.setTime(date.getTime()+(30*24*60*60*1000));
@@ -61,16 +62,22 @@
             let matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ));
+            console.log(matches);
+            if(matches=='null') document.cookie="area=; path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT";
             return matches ? decodeURIComponent(matches[1]) : '';
         }
 
         set =() => {
-            createCookie(area,area.value,60);
+            document.cookie('area',area.value,{expires: 60, path: '/'});
             location.reload();
         }  
             
         del = () => {
-            createCookie(area,'',30);
+            document.cookie('area','',{expires: 60, path: '/'});
+            for(let i=1; i<7; i++) {
+                let chid = 'ch_'+i;
+                document.cookie('cid','',{expires: 60, path: '/'});
+            }
             location.reload();
         }    
         fullend = ()=> {
@@ -101,7 +108,7 @@
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
-
+        
         area.value = getCookie("area");
         if (area.value != ""){
             document.getElementById('first').style.display="none";
@@ -109,12 +116,11 @@
             document.getElementById('but_2').style.display="inline";
             document.getElementById('but_3').style.display="inline";
         }
-              
-                           
+                                   
         document.getElementById("but_1").addEventListener("click", set, false);
         document.getElementById("but_2").addEventListener("click", stor, false);
         document.getElementById("but_3").addEventListener("click", del, false);
-                 
+    })            
     </script>
 </body>
 </html>
