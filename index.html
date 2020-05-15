@@ -8,15 +8,16 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value="getCookie('area')"></textarea> 
+    <textarea id="area" type="text" value="localStorage.getItem(area)"></textarea>
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
     <button id="but_3">Нет</button>
     <button class="but_4">Сохранить</button>
+    <button id="but_5">Продолжить</button>
 
     <div id="vote">
-        <p class="end">"Выберите свои любимые занятия"</p><Br>
+        <p class="end">"Выберите свои любимые занятия"</p><Br/>
         <input type="checkbox" class="name" id='ch_1'></input>
         <label for="ch_1">СПАТЬ</label><Br/>
         <input type="checkbox" class="name" id='ch_2'></input>
@@ -41,21 +42,22 @@
             border: 2px solid rgb(65, 44, 132);
             background-color: rgb(197, 233, 197);
         }
-        #but_2, #but_3, .but_4, div {
+        #but_2, #but_3, .but_4, #but_5, div {
             display: none;
         }
         p {
             font-size: large;
             margin-left: 10px;
         }
+        
     </style>
     <script>
-        $(document).ready(function() {   
+    $(document).ready(function() {   
 
         function setCookie(name, value) {
             options = {
             path: '/',
-            expires:'Mon, 04-Jan-2021 00:00:00 GMT'
+            expires: 'Mon, 04-Jan-2021 00:00:00 GMT'
             };
 
             if (options.expires.toUTCString) {
@@ -71,8 +73,10 @@
                     updatedCookie += "=" + optionValue;
                 }
             }
+            
             document.cookie = updatedCookie;
-            return(area.value);
+            document.getElementById("but_5").style.display="inline";
+           
         }
 
         function getCookie(name) {
@@ -84,19 +88,14 @@
         }
 
         set =() => {
-            document.cookie="'area'=area.value,{path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT}";
+            localStorage.setItem("area", area.value);
             location.reload();
-            return(area)
-        }
-
+        }  
+            
         del = () => {
-            document.cookie="area=; {path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT}";
-            for(let i=1; i<7; i++) {
-                let chid = 'ch_'+i;
-                document.cookie="chid=; path=/; expires=Mon, 04-Jan-2019 00:00:00 GMT";
-            }
+            localStorage.removeItem("area");
             location.reload();
-        } 
+        }    
 
         fullend = ()=> {
             document.querySelector('.end').textContent='Ваш выбор';
@@ -129,8 +128,8 @@
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
-        
-        if (area.value != "") {
+        area.value = localStorage.getItem("area");
+        if (area.value != ""){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
             document.getElementById('but_2').style.display="inline";
@@ -138,8 +137,14 @@
         }
                                    
         document.getElementById("but_1").addEventListener("click", set);
-        document.getElementById("but_2").addEventListener("click", stor, false);
-        document.getElementById("but_3").addEventListener("click", del, false);
+      //  event => {
+      //      console.log('area', ' ',area.value); setCookie('area',area.value)});
+      // Дорогой дуг!!! Не получилось у меня соханять и удалять куки через setCookie и delCookie, поэтому еализовано на LocalStorage.
+      // код не затер, чтоб были видны попытки сделатьна куки. 
+      // Удачи в учебе!!!
+        document.getElementById("but_2").addEventListener("click", stor);
+        document.getElementById("but_3").addEventListener("click", del);
+        document.getElementById("but_5").addEventListener("click", event => {location.reload(), false});
     })            
     </script>
 </body>
