@@ -8,7 +8,7 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value=> </textarea>
+    <textarea id="area" type="text" value="localStorage.getItem('area")"> </textarea>
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
@@ -84,7 +84,6 @@
             let matches = document.cookie.match(new RegExp(
                 "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ));
-            console.log(name,' ',matches);
             return matches ? decodeURIComponent(matches[1]) : '';
         }
 
@@ -130,7 +129,7 @@
         }
         area.value = localStorage.getItem('area');
         
-        if (localStorage.getItem(area.value) != "null"){
+        if (localStorage.getItem(area.value) != "undefined"){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
             document.getElementById('but_2').style.display="inline";
