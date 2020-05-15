@@ -8,7 +8,7 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value=""> </textarea>
+    <textarea id="area" type="text" value="'"> </textarea>
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
@@ -52,7 +52,8 @@
         
     </style>
     <script>
-    $(document).ready(function() {   
+    $(document).ready(function() {  
+        
         localStorage.setItem('area', '');
         function setCookie(name, value) {
             options = {
@@ -88,12 +89,12 @@
         }
 
         set =() => {
-            localStorage.setItem("area", area.value);
+            localStorage.setItem('area', area.value);
             location.reload();
         }  
             
         del = () => {
-            localStorage.removeItem("area");
+            localStorage.removeItem('area');
             location.reload();
         }    
 
