@@ -8,8 +8,7 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value=getCookie(area)></textarea>
-    
+    <textarea id="area" type="text" value=getCookie(area)></textarea> 
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
@@ -18,12 +17,18 @@
 
     <div id="vote">
         <p class="end">"Выберите свои любимые занятия"</p><Br>
-        <input type="checkbox" class="name" id='ch_1' >СПАТЬ</input><Br/>
-        <input type="checkbox" class="name" id='ch_2' >ЕСТЬ</input><Br/>
-        <input type="checkbox" class="name" id='ch_3' >ИГРАТЬ</input><Br/>
-        <input type="checkbox" class="name" id='ch_4' >БЕГАТЬ</input><Br/>
-        <input type="checkbox" class="name" id='ch_5' >ТАНЦЕВАТЬ</input><Br/>
-        <input type="checkbox" class="name" id='ch_6' >БУХАТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_1'></input>
+        <label for="ch_1">СПАТЬ</label><Br/>
+        <input type="checkbox" class="name" id='ch_2'></input>
+        <label for="ch_2">ЕСТЬ</label><Br/>
+        <input type="checkbox" class="name" id='ch_3'></input>
+        <label for="ch_3">ИГРАТЬ</label><Br/>
+        <input type="checkbox" class="name" id='ch_4'></input>
+        <label for="ch_4">БЕГАТЬ</label><Br/>
+        <input type="checkbox" class="name" id='ch_5'></input>
+        <label for="ch_5">ТАНЦЕВАТЬ</label><Br/>
+        <input type="checkbox" class="name" id='ch_6'></input>
+        <label for="ch_6">БУХАТЬ</label><Br/>
        </p>
     </div>
 
@@ -43,15 +48,20 @@
             font-size: large;
             margin-left: 10px;
         }
-        
     </style>
     <script>
-        
         function createCookie(name,value) {
             let date = new Date();
             date.setTime(date.getTime()+(30*24*60*60*1000));
             let expires = date.toGMTString();
-            console.log(document.cookie = "'"+name +"=" + " '"+value+"' " + expires + "; path=/"+"'");
+            document.cookie = "'"+name +"=" + " '"+value+"' " + expires + "; path=/"+"'";
+        }
+
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : '';
         }
 
         set =() => {
@@ -66,11 +76,10 @@
         fullend = ()=> {
             document.querySelector('.end').textContent='Ваш выбор';
             document.querySelector('.but_4').style.display="none";
+            document.getElementById('void').setAttribute('disabled', true);
             for(let i=1; i<7; i++) {
                 let chid = 'ch_'+i;
-                document.getElementById('ch_'+i).setAttribute('disabled', true);
-                if($('chid :selected')) {
-                    console.log(chid)
+                if($('chid :checked')) {
                     createCookie(chid,'checked', 30);
                 }
             }
@@ -82,18 +91,18 @@
             document.getElementById('but_3').style.display="none";
             let k=0;
             for (let i=1; i<7; i++) {
-                if(localStorage.getItem('ch_'+i) =="checked") {
+                if(getCookie('ch_'+i) =="checked") {
                     k++;
                     document.getElementById('ch_'+i).setAttribute('ch_'+i,'checked');
-                    
                 }
             }
-            if( k > 0) {fullend};
+            if( k > 0) document.getElementById('void').setAttribute('disabled', true);
+
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
 
-        area.value = localStorage.getItem("area");
+        area.value = getCookie("area");
         if (area.value != ""){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
