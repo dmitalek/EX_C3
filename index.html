@@ -129,6 +129,7 @@
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
         area.value = localStorage.getItem("area");
+        area.value ? !'null': area.value, '';
         if (area.value != ""){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
