@@ -84,7 +84,6 @@
             document.getElementById('but_3').style.display="none";
             let k=0;
             for (let i=1; i<7; i++) {
-                
                 if(localStorage.getItem('ch_'+i) =="checked") {
                     k++;
                     document.getElementById('ch_'+i).setAttribute('ch_'+i,'checked');
@@ -92,8 +91,6 @@
                 }
             }
             if( k > 0) {fullend};
-
-                 
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
