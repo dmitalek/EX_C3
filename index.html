@@ -8,7 +8,7 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value=getCookie(area)></textarea> 
+    <textarea id="area" type="text" value="getCookie(area)"></textarea> 
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
@@ -51,43 +51,62 @@
     </style>
     <script>
         $(document).ready(function() {   
-        function createCookie(name,value) {
-            let date = new Date();
-            date.setTime(date.getTime()+(30*24*60*60*1000));
-            let expires = date.toGMTString();
-            document.cookie = "'"+name +"=" + " '"+value+"' " + expires + "; path=/"+"'";
+
+        function setCookie(name, value) {
+            options = {
+            path: '/',
+            expires:'Mon, 04-Jan-2021 00:00:00 GMT'
+            };
+
+            if (options.expires.toUTCString) {
+            options.expires = options.expires.toUTCString();
+            }
+
+            let updatedCookie = encodeURIComponent(name) +  encodeURIComponent(value);
+
+            for (let optionKey in options) {
+                updatedCookie += "; " + optionKey;
+                let optionValue = options[optionKey];
+                if (optionValue !== true) {
+                    updatedCookie += "=" + optionValue;
+                }
+            }
+            document.cookie = updatedCookie;
+            return(area.value);
         }
 
         function getCookie(name) {
             let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ));
-            console.log(matches);
-            if(matches=='null') document.cookie="area=; path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT";
+            console.log(name,' ',matches);
             return matches ? decodeURIComponent(matches[1]) : '';
         }
 
         set =() => {
-            document.cookie('area',area.value,{expires: 60, path: '/'});
+            document.cookie="'area'=area.value,{path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT}";
             location.reload();
-        }  
-            
+            return(area)
+        }
+
         del = () => {
-            document.cookie('area','',{expires: 60, path: '/'});
+            document.cookie="area=; {path=/; expires=Mon, 04-Jan-2021 00:00:00 GMT}";
             for(let i=1; i<7; i++) {
                 let chid = 'ch_'+i;
-                document.cookie('cid','',{expires: 60, path: '/'});
+                document.cookie="chid=; path=/; expires=Mon, 04-Jan-2019 00:00:00 GMT";
             }
             location.reload();
-        }    
+        } 
+
         fullend = ()=> {
             document.querySelector('.end').textContent='Ваш выбор';
             document.querySelector('.but_4').style.display="none";
-            document.getElementById('void').setAttribute('disabled', true);
+            $('.name').attr('disabled', true);
             for(let i=1; i<7; i++) {
                 let chid = 'ch_'+i;
-                if($('chid :checked')) {
-                    createCookie(chid,'checked', 30);
+                
+                if($('chid').attr('checked')) {
+                    setCookie(chid,'checked');
                 }
             }
         }
@@ -98,26 +117,27 @@
             document.getElementById('but_3').style.display="none";
             let k=0;
             for (let i=1; i<7; i++) {
-                if(getCookie('ch_'+i) =="checked") {
+                let chid = 'ch_'+i;
+                console.log(chid, getCookie('chid').value);
+                if(getCookie(chid) =="checked") {
                     k++;
-                    document.getElementById('ch_'+i).setAttribute('ch_'+i,'checked');
+                    $('#chid').attr('checked', true);
                 }
             }
-            if( k > 0) document.getElementById('void').setAttribute('disabled', true);
+            if( k > 0) fullend;
 
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
         
-        area.value = getCookie("area");
-        if (area.value != ""){
+        if (area.value != "") {
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
             document.getElementById('but_2').style.display="inline";
             document.getElementById('but_3').style.display="inline";
         }
                                    
-        document.getElementById("but_1").addEventListener("click", set, false);
+        document.getElementById("but_1").addEventListener("click", set);
         document.getElementById("but_2").addEventListener("click", stor, false);
         document.getElementById("but_3").addEventListener("click", del, false);
     })            
