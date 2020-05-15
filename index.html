@@ -129,8 +129,8 @@
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
         area.value = localStorage.getItem('area');
-        console.log(area.value);
-        if (localStorage.getItem('area') != "null"){
+        
+        if (localStorage.getItem(area.value) != "null"){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
             document.getElementById('but_2').style.display="inline";
