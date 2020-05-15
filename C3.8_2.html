@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <META HTTP-EQUIV="Set-Cookie" CONTENT="BT=value";>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <title>document</title>
+</head>
+<body>
+    <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
+    <textarea id="area" type="text" value=getCookie(area)></textarea>
+    
+    <br>
+    <button id="but_1">Запомнить</button>
+    <button id="but_2">Да</button>
+    <button id="but_3">Нет</button>
+    <button class="but_4">Сохранить</button>
+
+    <div id="vote">
+        <p class="end">"Выберите свои любимые занятия"</p><Br>
+        <input type="checkbox" class="name" id='ch_1' >СПАТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_2' >ЕСТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_3' >ИГРАТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_4' >БЕГАТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_5' >ТАНЦЕВАТЬ</input><Br/>
+        <input type="checkbox" class="name" id='ch_6' >БУХАТЬ</input><Br/>
+       </p>
+    </div>
+
+    <style>
+        #area, button{
+            display: inline-block;
+            margin: 10px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            border: 2px solid rgb(65, 44, 132);
+            background-color: rgb(197, 233, 197);
+        }
+        #but_2, #but_3, .but_4, div {
+            display: none;
+        }
+        p {
+            font-size: large;
+            margin-left: 10px;
+        }
+        
+    </style>
+    <script>
+        
+        function createCookie(name,value) {
+            let date = new Date();
+            date.setTime(date.getTime()+(30*24*60*60*1000));
+            let expires = date.toGMTString();
+            console.log(document.cookie = "'"+name +"=" + " '"+value+"' " + expires + "; path=/"+"'");
+        }
+
+        set =() => {
+            createCookie(area,area.value,60);
+            location.reload();
+        }  
+            
+        del = () => {
+            createCookie(area,'',30);
+            location.reload();
+        }    
+        fullend = ()=> {
+            document.querySelector('.end').textContent='Ваш выбор';
+            document.querySelector('.but_4').style.display="none";
+            for(let i=1; i<7; i++) {
+                let chid = 'ch_'+i;
+                document.getElementById('ch_'+i).setAttribute('disabled', true);
+                if($('chid :selected')) {
+                    console.log(chid)
+                    createCookie(chid,'checked', 30);
+                }
+            }
+        }
+
+        stor = function() {
+            document.getElementById("vote").style.display="inline";
+            document.getElementById('but_2').style.display="none";
+            document.getElementById('but_3').style.display="none";
+            let k=0;
+            for (let i=1; i<7; i++) {
+                
+                if(localStorage.getItem('ch_'+i) =="checked") {
+                    k++;
+                    document.getElementById('ch_'+i).setAttribute('ch_'+i,'checked');
+                    
+                }
+            }
+            if( k > 0) {fullend};
+
+                 
+            document.querySelector('.but_4').style.display="inline";
+            document.querySelector('.but_4').addEventListener('click', fullend);
+        }
+
+        area.value = localStorage.getItem("area");
+        if (area.value != ""){
+            document.getElementById('first').style.display="none";
+            document.getElementById('but_1').style.display="none";
+            document.getElementById('but_2').style.display="inline";
+            document.getElementById('but_3').style.display="inline";
+        }
+              
+                           
+        document.getElementById("but_1").addEventListener("click", set, false);
+        document.getElementById("but_2").addEventListener("click", stor, false);
+        document.getElementById("but_3").addEventListener("click", del, false);
+                 
+    </script>
+</body>
+</html>
