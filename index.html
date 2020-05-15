@@ -8,7 +8,7 @@
 </head>
 <body>
     <p class='ques'>"Здравствуйте! <span id=first>Введите</span> Ваш город"</p>
-    <textarea id="area" type="text" value=""></textarea>
+    <textarea id="area" type="text" value=""> </textarea>
     <br>
     <button id="but_1">Запомнить</button>
     <button id="but_2">Да</button>
@@ -53,7 +53,7 @@
     </style>
     <script>
     $(document).ready(function() {   
-
+        localStorage.setItem('area', '');
         function setCookie(name, value) {
             options = {
             path: '/',
@@ -117,7 +117,6 @@
             let k=0;
             for (let i=1; i<7; i++) {
                 let chid = 'ch_'+i;
-                console.log(chid, getCookie('chid').value);
                 if(getCookie(chid) =="checked") {
                     k++;
                     $('#chid').attr('checked', true);
@@ -129,7 +128,7 @@
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
         area.value = localStorage.getItem(area);
-        area.value ? !'null': area.value, '';
+        console.log(area.value);
         if (area.value != ""){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
