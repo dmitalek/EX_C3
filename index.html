@@ -128,9 +128,9 @@
             document.querySelector('.but_4').style.display="inline";
             document.querySelector('.but_4').addEventListener('click', fullend);
         }
-        area.value = localStorage.getItem(area);
+        area.value = localStorage.getItem('area');
         console.log(area.value);
-        if (area.value != "null"){
+        if (localStorage.getItem('area') != "null"){
             document.getElementById('first').style.display="none";
             document.getElementById('but_1').style.display="none";
             document.getElementById('but_2').style.display="inline";
