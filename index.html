@@ -85,7 +85,16 @@
             ));
             return matches ? decodeURIComponent(matches[1]) : '';
         }
-
+        function chSetStatus() {
+        $("input[type='checkbox']").each(function() {
+            const status = getCookie($(this).attr('id'));
+            if (status !== undefined) {
+                $(this).prop('checked', JSON.parse(status));
+             }
+             });
+         }
+        
+        chSetStatus();
         set =() => {
             localStorage.setItem('area', area.value);
             location.reload();
