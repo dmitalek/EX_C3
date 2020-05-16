@@ -85,7 +85,12 @@
             ));
             return matches ? decodeURIComponent(matches[1]) : '';
         }
-                    
+        
+        set =() => {
+            localStorage.setItem("area", area.value);
+            location.reload();
+        }  
+        
         del = () => {
             localStorage.setItem('area', '');
             location.reload();
